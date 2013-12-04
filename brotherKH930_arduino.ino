@@ -1,11 +1,21 @@
 #include "brotherKH930.h"
 
-void setup() {
-  // put your setup code here, to run once:
+PinSetup pins = kniticV2Pins();
+BrotherKH930 brother(pins);
 
+void setup() {
+  Serial.begin(115200);
+  Serial.println("Ready.");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  Direction dir = brother.direction();
+  int pos = brother.position();
 
+  Serial.print("@");
+  Serial.print(pos);
+  Serial.print("  ");
+  if (dir == LEFT) Serial.print("<-");
+  else Serial.print("->");
+  Serial.println();
 }
