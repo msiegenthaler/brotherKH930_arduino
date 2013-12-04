@@ -16,6 +16,7 @@ Position::Position(int pinV1, int pinV2, int pinBP) {
   pos = -100; //carriage always starts at the left
   dir = RIGHT;
 
+  isr_pos = this;
   attachInterrupt(pinV1, isr_v1, CHANGE);
 }
 
