@@ -13,7 +13,7 @@ Position::Position(int pinV1, int pinV2, int pinBP) {
   this->pinBP = pinBP;
   pinMode(pinBP, INPUT);
 
-  pos = -100; //carriage always starts at the left
+  pos = -128; //carriage always starts at the left
   dir = RIGHT;
   lastV2 = LOW;
 
@@ -46,6 +46,6 @@ void Position::updateDirection() {
 }
 
 void Position::moveOneNeedle() { // in direction, so call updateDirection first
-  if (dir == LEFT) pos = max(-100, pos-1);
-  else pos = min(151, pos + 1);
+  if (dir == LEFT) pos = max(-128, pos-1);
+  else pos = min(123, pos + 1);
 }
