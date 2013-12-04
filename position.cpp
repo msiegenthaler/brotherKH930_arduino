@@ -13,7 +13,8 @@ Position::Position(int pinV1, int pinV2, int pinBP) {
   this->pinBP = pinBP;
   pinMode(pinBP, INPUT);
 
-  this->pos = -100; //carriage always starts at the left
+  pos = -100; //carriage always starts at the left
+  dir = RIGHT;
 
   attachInterrupt(pinV1, isr_v1, CHANGE);
 }
@@ -24,11 +25,11 @@ void Position::onV1() { // called by ISR
 }
 
 void Position::updateDirection() {
-  if (digitalRead(pinV1) == digitalRead(pinV2)) direction = Left;
-  else direction = Right;
+  if (digitalRead(pinV1) == digitalRead(pinV2)) dir = LEFT;
+  else dir = RIGHT;
 }
 
 void Position::moveOneNeedle() { // in direction, so call updateDirection first
-  if (direction == Left) pos = max(-100, pos-1);
+  if (dir == LEFT) pos = max(-100, pos-1);
   else pos = min(100, pos + 1);
 }

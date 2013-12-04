@@ -21,7 +21,7 @@ private:
 private:
   int pinV1, pinV2, pinBP;
   int pos;
-  Direction direction;
+  Direction dir;
 };
 
 #endif
