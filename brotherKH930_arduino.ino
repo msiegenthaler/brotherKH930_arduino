@@ -15,6 +15,7 @@ void loop() {
   int pos = brother.position();
 
   if (old_pos != pos) {
+    old_pos = pos;
     Serial.print("@");
     Serial.print(pos);
     Serial.print("  ");
