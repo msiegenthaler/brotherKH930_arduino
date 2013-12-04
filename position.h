@@ -1,6 +1,8 @@
 #ifndef POSITION_H_
 #define POSITION_H_
 
+#import <arduino.h>
+
 enum Direction { LEFT, RIGHT };
 
 /** Responsible to keep track of the carriage position. */
@@ -20,6 +22,7 @@ private:
   void moveOneNeedle();
 private:
   int pinV1, pinV2, pinBP;
+  boolean lastV2;
   int pos;
   Direction dir;
 };

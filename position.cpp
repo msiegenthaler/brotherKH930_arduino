@@ -15,6 +15,7 @@ Position::Position(int pinV1, int pinV2, int pinBP) {
 
   pos = -100; //carriage always starts at the left
   dir = RIGHT;
+  lastV2 = LOW;
 
   isr_pos = this;
   attachInterrupt(pinV1, isr_v1, CHANGE);
@@ -29,8 +30,14 @@ int Position::position() {
 }
 
 void Position::onV1() { // called by ISR
+  //make sure that v2 changed its value as well. Otherwise it might just be an unstable state.
+  boolean v2value = digitalRead(pinV2);
+  if (lastV2 == v2value)
+    return;
+  lastV2 = v2value;
+
   updateDirection();
-  if (digitalRead(pinV2) == HIGH) moveOneNeedle();
+  if (v2value == HIGH) moveOneNeedle();
 }
 
 void Position::updateDirection() {
