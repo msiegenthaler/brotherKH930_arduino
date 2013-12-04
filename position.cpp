@@ -19,6 +19,14 @@ Position::Position(int pinV1, int pinV2, int pinBP) {
   attachInterrupt(pinV1, isr_v1, CHANGE);
 }
 
+Direction Position::direction() {
+  return dir;
+}
+
+int Position::position() {
+  return pos;
+}
+
 void Position::onV1() { // called by ISR
   updateDirection();
   if (digitalRead(pinV2) == HIGH) moveOneNeedle();
