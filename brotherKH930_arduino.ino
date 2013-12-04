@@ -8,14 +8,20 @@ void setup() {
   Serial.println("Ready.");
 }
 
+int old_pos = 0;
+
 void loop() {
   Direction dir = brother.direction();
   int pos = brother.position();
 
-  Serial.print("@");
-  Serial.print(pos);
-  Serial.print("  ");
-  if (dir == LEFT) Serial.print("<-");
-  else Serial.print("->");
-  Serial.println();
+  if (old_pos != pos) {
+    Serial.print("@");
+    Serial.print(pos);
+    Serial.print("  ");
+    if (dir == LEFT) Serial.print("<-");
+    else Serial.print("->");
+    Serial.println();
+  }
+
+  delay(30);
 }
