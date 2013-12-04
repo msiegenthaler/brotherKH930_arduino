@@ -46,6 +46,6 @@ void Position::updateDirection() {
 }
 
 void Position::moveOneNeedle() { // in direction, so call updateDirection first
-  if (dir == LEFT) pos = max(-128, pos-1);
-  else pos = min(123, pos + 1);
+  if (dir == LEFT) pos = max(-123, pos-1);
+  else pos = min(128, pos + 1);
 }
