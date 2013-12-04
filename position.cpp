@@ -1,6 +1,9 @@
 #include <arduino.h>
 #include "position.h"
 
+#define START -123
+#define END   128
+
 // Redirects the ISR to the class method.
 Position *isr_pos;
 void isr_v1() { isr_pos->onV1(); }
@@ -13,7 +16,7 @@ Position::Position(int pinV1, int pinV2, int pinBP) {
   this->pinBP = pinBP;
   pinMode(pinBP, INPUT);
 
-  pos = -128; //carriage always starts at the left
+  pos = START; //carriage always starts at the left
   dir = RIGHT;
   lastV2 = LOW;
 
@@ -46,6 +49,6 @@ void Position::updateDirection() {
 }
 
 void Position::moveOneNeedle() { // in direction, so call updateDirection first
-  if (dir == LEFT) pos = max(-123, pos-1);
-  else pos = min(128, pos + 1);
+  if (dir == LEFT) pos = max(START, pos-1);
+  else pos = min(END, pos + 1);
 }
