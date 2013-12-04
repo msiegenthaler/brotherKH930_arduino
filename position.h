@@ -12,7 +12,7 @@ public:
 
   /** Carriage movement direction (left = smaller needle numbers). */
   Direction direction();
-  /** Current needle (-100 until +100) */
+  /** Current needle (-100 until +151, refers to the needle number at the 'r' in the brother label on the carriage). */
   int position();
 
 public: //pseudo-public (because of ISR), do not use.
