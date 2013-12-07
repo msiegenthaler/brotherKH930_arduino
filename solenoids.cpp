@@ -18,7 +18,7 @@ void Solenoids::onTurnmark(boolean is_L_carriage, boolean left) {
   else mode2 = !bp;               //K and right
 }
 
-void Solenoids::onMove(int position, boolean toTheLeft) {
+void Solenoids::onMove(unsigned int position, boolean toTheLeft) {
   //Window of relevant needles
   int windowMax, windowMin;
   if (toTheLeft) {
@@ -37,19 +37,19 @@ void Solenoids::onMove(int position, boolean toTheLeft) {
   }
 }
 
-int Solenoids::needleToSoleniod(int needle) {
+int Solenoids::needleToSoleniod(unsigned int needle) {
   // See the table on page 7 in the support manual
-  int result = (needle + NEEDLE_FROM) % SOLENIOD_COUNT;
+  // we number needles from 0 to 200, so left 100 in the manual is zero here
+  int result = needle % SOLENIOD_COUNT;
   if (mode2) result = (result + (SOLENIOD_COUNT/2)) % SOLENIOD_COUNT;
   return result;
 }
 
-boolean Solenoids::patternAt(int needle) {
-  int i = needle - NEEDLE_FROM;
-  if (i < 0 || i >= NEEDLE_COUNT) return false;
-  return pattern[i];
+boolean Solenoids::patternAt(unsigned int needle) {
+  if (needle < 0 || needle >= NEEDLE_COUNT) return false;
+  return pattern[needle];
 }
 
-void Solenoids::needle(int needle, boolean value) {
+void Solenoids::needle(unsigned int needle, boolean value) {
   pattern[needle] = value;
 }

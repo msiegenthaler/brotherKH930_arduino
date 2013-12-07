@@ -62,10 +62,14 @@ void BrotherKH930::setPattern(boolean value[]) {
   }
 }
 
+void BrotherKH930::needle(unsigned int needle, boolean value) {
+  solenoids->needle(needle, value);
+}
+
 void BrotherKH930::onPositionChange() {
   tmLeft->update();
   tmRight->update();
-  solenoids->onMove(position(), direction() == LEFT);
+  solenoids->onMove(pos->zeroBasedPosition(), direction() == LEFT);
   callback(callbackContext);
 }
 

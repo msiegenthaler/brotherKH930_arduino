@@ -35,6 +35,10 @@ int Position::position() {
   return pos;
 }
 
+unsigned int Position::zeroBasedPosition() {
+  return pos - START;
+}
+
 void Position::onV1() { // called by ISR
   //make sure that v2 changed its value as well. Otherwise it might just be an unstable state.
   boolean v2value = digitalRead(pinV2);
