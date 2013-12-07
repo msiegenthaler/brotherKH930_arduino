@@ -3,14 +3,16 @@
 
 #import "position.h"
 #import "turnmark.h"
+#import "solenoids.h"
 
 /** Pins unsed for interfacing with the BrotherKH930. */
 struct PinSetup {
   int encoderV1;
   int encoderV2;
-  int encoderBP; // belt-phase
+  int beltPhase;
   int turnmarkLeft;  //analog
   int turnmarkRight; //analog
+  int solenoids[16]; //0 until F
 };
 
 /** Pin setup as used by the KniticV2 PCB. */
@@ -34,13 +36,16 @@ public:
 
 private:
   static void positionCallback(void* context, int pos);
-  static void turnmarkCallback(void* context, CarriageType carriage);
-  void onChange();
+  static void turnmarkLCallback(void* context, CarriageType carriage);
+  static void turnmarkRCallback(void* context, CarriageType carriage);
+  void onPositionChange();
+  void onTurnmark(boolean left, CarriageType carriage);
 private:
   Position *pos;
-private:
   Turnmark *tmLeft;
   Turnmark *tmRight;
+  Solenoids *solenoids;
+private:
   CarriageType carriage;
 private:
   void (*callback)(void*);
