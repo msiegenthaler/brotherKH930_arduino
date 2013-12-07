@@ -6,6 +6,7 @@ BrotherKH930 brother(pins, onChange, 0);
 
 void setup() {
   Serial.begin(115200);
+  brother.start();
   Serial.println("Ready.");
 }
 

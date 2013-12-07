@@ -25,13 +25,14 @@ void BrotherKH930::turnmarkCallback(void* context, CarriageType carriage) {
 BrotherKH930::BrotherKH930(const PinSetup pins, void (*callback)(void*), void* context) {
   this->callback = callback;
   this->callbackContext = context;
-  noInterrupts();
   tmLeft = new Turnmark(pins.turnmarkLeft, turnmarkCallback, this);
   tmRight = new Turnmark(pins.turnmarkRight, turnmarkCallback, this);
   pos = new Position(pins.encoderV1, pins.encoderV2, pins.encoderBP, positionCallback, this);
-  interrupts();
 }
 
+void BrotherKH930::start() {
+  pos->start();
+}
 
 int BrotherKH930::position() {
   return pos->position();

@@ -24,6 +24,7 @@ PinSetup kniticV2Pins();
 class BrotherKH930 {
 public:
   BrotherKH930(const PinSetup pins, void (*callback)(void*), void* context);
+  void start();
 
   int position();
   Direction direction();

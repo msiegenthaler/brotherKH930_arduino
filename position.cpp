@@ -23,6 +23,9 @@ Position::Position(int pinV1, int pinV2, int pinBP, void (*callback)(void*, int)
   lastV2 = LOW;
 
   isr_pos = this;
+}
+
+void Position::start() {
   attachInterrupt(pinV1, isr_v1, CHANGE);
 }
 
