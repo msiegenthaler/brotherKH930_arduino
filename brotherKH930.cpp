@@ -59,6 +59,7 @@ boolean BrotherKH930::isAtRightMark() {
 void BrotherKH930::onPositionChange() {
   tmLeft->update();
   tmRight->update();
+  solenoids->onMove(position(), direction() == LEFT);
   callback(callbackContext);
 }
 
