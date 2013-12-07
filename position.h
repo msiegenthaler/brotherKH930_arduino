@@ -11,7 +11,7 @@ enum Direction { LEFT, RIGHT };
  */
 class Position {
 public:
-  Position(int pinV1, int pinV2, int pinBP, void (*callback)(void*, int), void* context);
+  Position(int pinV1, int pinV2, void (*callback)(void*, int), void* context);
   void start();
 
   /** Carriage movement direction (left = smaller needle numbers). */
@@ -26,7 +26,7 @@ private:
   void updateDirection();
   void moveOneNeedle();
 private:
-  int pinV1, pinV2, pinBP;
+  int pinV1, pinV2;
   boolean lastV2;
   int pos;
   Direction dir;

@@ -27,7 +27,7 @@ BrotherKH930::BrotherKH930(const PinSetup pins, void (*callback)(void*), void* c
   this->callbackContext = context;
   tmLeft = new Turnmark(pins.turnmarkLeft, turnmarkCallback, this);
   tmRight = new Turnmark(pins.turnmarkRight, turnmarkCallback, this);
-  pos = new Position(pins.encoderV1, pins.encoderV2, pins.encoderBP, positionCallback, this);
+  pos = new Position(pins.encoderV1, pins.encoderV2, positionCallback, this);
 }
 
 void BrotherKH930::start() {
