@@ -7,7 +7,6 @@ BrotherKH930 brother(pins, onChange, 0);
 void setup() {
   Serial.begin(115200);
   Serial.println("Ready.");
-  delay(200);
 }
 
 boolean changed = true;
@@ -26,8 +25,26 @@ void loop() {
     Serial.print("@");
     Serial.print(pos);
     Serial.print("  ");
+
     if (dir == LEFT) Serial.print("<-");
     else Serial.print("->");
+    Serial.print(" ");
+
+    if (brother.carriageType() == K_CARRIAGE) Serial.print("K");
+    else if (brother.carriageType() == G_CARRIAGE) Serial.print("G");
+    else if (brother.carriageType() == L_CARRIAGE) Serial.print("L");
+    else Serial.print("Unknown");
+    if (brother.tmLeft->isAtMark()) {
+      Serial.print(" at mark");
+    }
+
+    //Serial.println();
+
+    Serial.print("              TM left states: ");
+    for (int i=0; i<3; i++) {
+      Serial.print(brother.tmLeft->lastState[i]);
+      Serial.print(" ");
+    }
     Serial.println();
   }
 }

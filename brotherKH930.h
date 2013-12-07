@@ -2,12 +2,15 @@
 #define BROTHERKH930_H_
 
 #import "position.h"
+#import "turnmark.h"
 
 /** Pins unsed for interfacing with the BrotherKH930. */
 struct PinSetup {
   int encoderV1;
   int encoderV2;
   int encoderBP; // belt-phase
+  int turnmarkLeft;  //analog
+  int turnmarkRight; //analog
 };
 
 /** Pin setup as used by the KniticV2 PCB. */
@@ -24,12 +27,17 @@ public:
 
   int position();
   Direction direction();
+  CarriageType carriageType();
 
 private:
   static void positionCallback(void* context, int pos);
+  static void turnmarkCallback(void* context, CarriageType carriage);
   void onChange();
 private:
   Position *pos;
+public: //TODO private
+  Turnmark *tmLeft;
+  CarriageType carriage;
 private:
   void (*callback)(void*);
   void* callbackContext;

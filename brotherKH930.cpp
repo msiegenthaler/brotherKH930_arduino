@@ -5,23 +5,38 @@ PinSetup kniticV2Pins() {
   pins.encoderV1 = 2;
   pins.encoderV2 = 3;
   pins.encoderBP = 4;
+  pins.turnmarkLeft = 1;
+  pins.turnmarkRight = 0;
   return pins;
 }
 
 
 void BrotherKH930::positionCallback(void* context, int pos) {
   ((BrotherKH930*)context)->onChange();
+  ((BrotherKH930*)context)->tmLeft->update();
+}
+
+void BrotherKH930::turnmarkCallback(void* context, CarriageType carriage) {
+  ((BrotherKH930*)context)->carriage = carriage;
+  ((BrotherKH930*)context)->onChange();
 }
 
 BrotherKH930::BrotherKH930(const PinSetup pins, void (*callback)(void*), void* context) {
   this->callback = callback;
   this->callbackContext = context;
+  noInterrupts();
+  tmLeft = new Turnmark(pins.turnmarkLeft, turnmarkCallback, this);
   pos = new Position(pins.encoderV1, pins.encoderV2, pins.encoderBP, positionCallback, this);
+  interrupts();
 }
 
 
 int BrotherKH930::position() {
   return pos->position();
+}
+
+CarriageType BrotherKH930::carriageType() {
+  return carriage;
 }
 
 Direction BrotherKH930::direction() {
