@@ -15,7 +15,8 @@ PinSetup kniticV2Pins();
 
 /**
  * Interfact to a brother knitting machine KH930/940.
- * The callback will be called on every event (position/direction change).
+ * The callback will be called on every event (position/direction change). The
+ * callback might be called in a ISR.
  */
 class BrotherKH930 {
 public:
