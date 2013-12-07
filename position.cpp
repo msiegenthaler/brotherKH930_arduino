@@ -6,15 +6,17 @@
 
 // Redirects the ISR to the class method.
 Position *isr_pos;
-void isr_v1() { isr_pos->onV1(); }
+void Position::isr_v1() { isr_pos->onV1(); }
 
-Position::Position(int pinV1, int pinV2, int pinBP) {
+Position::Position(int pinV1, int pinV2, int pinBP, void (*callback)(void*, int), void* context) {
   this->pinV1 = pinV1;
   pinMode(pinV1, INPUT);
   this->pinV2 = pinV2;
   pinMode(pinV2, INPUT);
   this->pinBP = pinBP;
   pinMode(pinBP, INPUT);
+  this->callback = callback;
+  this->callbackContext = context;
 
   pos = START; //carriage always starts at the left
   dir = RIGHT;
@@ -40,7 +42,10 @@ void Position::onV1() { // called by ISR
   lastV2 = v2value;
 
   updateDirection();
-  if (v2value == HIGH) moveOneNeedle();
+  if (v2value == HIGH) {
+    moveOneNeedle();
+    callback(callbackContext, pos);
+  }
 }
 
 void Position::updateDirection() {

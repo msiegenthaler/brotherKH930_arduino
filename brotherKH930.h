@@ -13,16 +13,25 @@ struct PinSetup {
 /** Pin setup as used by the KniticV2 PCB. */
 PinSetup kniticV2Pins();
 
-/** Interfact to a brother knitting machine KH930/940. */
+/**
+ * Interfact to a brother knitting machine KH930/940.
+ * The callback will be called on every event (position/direction change).
+ */
 class BrotherKH930 {
 public:
-  BrotherKH930(const PinSetup pins);
+  BrotherKH930(const PinSetup pins, void (*callback)(void*), void* context);
 
   int position();
   Direction direction();
 
 private:
+  static void positionCallback(void* context, int pos);
+  void onChange();
+private:
   Position *pos;
+private:
+  void (*callback)(void*);
+  void* callbackContext;
 };
 
 #endif

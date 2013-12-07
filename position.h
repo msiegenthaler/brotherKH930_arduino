@@ -5,17 +5,21 @@
 
 enum Direction { LEFT, RIGHT };
 
-/** Responsible to keep track of the carriage position. */
+/**
+ * Responsible to keep track of the carriage position.
+ * The callback will be called on every change of position (inside a ISR).
+ */
 class Position {
 public:
-  Position(int pinV1, int pinV2, int pinBP);
+  Position(int pinV1, int pinV2, int pinBP, void (*callback)(void*, int), void* context);
 
   /** Carriage movement direction (left = smaller needle numbers). */
   Direction direction();
   /** Current needle (-128 until +123, refers to the needle number at the middle of the carriage [where the thread is]). */
   int position();
 
-public: //pseudo-public (because of ISR), do not use.
+private:
+  static void isr_v1();
   void onV1();
 private:
   void updateDirection();
@@ -25,6 +29,9 @@ private:
   boolean lastV2;
   int pos;
   Direction dir;
+private:
+  void (*callback)(void*, int);
+  void* callbackContext;
 };
 
 #endif

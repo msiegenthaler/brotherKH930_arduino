@@ -9,9 +9,16 @@ PinSetup kniticV2Pins() {
 }
 
 
-BrotherKH930::BrotherKH930(const PinSetup pins) {
-  pos = new Position(pins.encoderV1, pins.encoderV2, pins.encoderBP);
+void BrotherKH930::positionCallback(void* context, int pos) {
+  ((BrotherKH930*)context)->onChange();
 }
+
+BrotherKH930::BrotherKH930(const PinSetup pins, void (*callback)(void*), void* context) {
+  this->callback = callback;
+  this->callbackContext = context;
+  pos = new Position(pins.encoderV1, pins.encoderV2, pins.encoderBP, positionCallback, this);
+}
+
 
 int BrotherKH930::position() {
   return pos->position();
@@ -19,4 +26,8 @@ int BrotherKH930::position() {
 
 Direction BrotherKH930::direction() {
   return pos->direction();
+}
+
+void BrotherKH930::onChange() {
+  callback(callbackContext);
 }
