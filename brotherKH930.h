@@ -37,6 +37,7 @@ private:
   Position *pos;
 public: //TODO private
   Turnmark *tmLeft;
+  Turnmark *tmRight;
   CarriageType carriage;
 private:
   void (*callback)(void*);
