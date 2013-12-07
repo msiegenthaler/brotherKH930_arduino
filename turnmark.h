@@ -31,7 +31,7 @@ private:
   void pushState(InputState state);
   /** Count of the state within lastState. */
   int countStates(InputState state);
-public: //TODO private
+private:
   int pin;
   InputState lastState[3]; // 3 last changes, newest first
   boolean atTurnmark;

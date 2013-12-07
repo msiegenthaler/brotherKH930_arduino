@@ -45,6 +45,14 @@ Direction BrotherKH930::direction() {
   return pos->direction();
 }
 
+boolean BrotherKH930::isAtLeftMark() {
+  return tmLeft->isAtMark();
+}
+
+boolean BrotherKH930::isAtRightMark() {
+  return tmRight->isAtMark();
+}
+
 void BrotherKH930::onChange() {
   callback(callbackContext);
 }

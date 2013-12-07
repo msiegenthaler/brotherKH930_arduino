@@ -27,6 +27,8 @@ public:
 
   int position();
   Direction direction();
+  boolean isAtLeftMark();
+  boolean isAtRightMark();
   CarriageType carriageType();
 
 private:
@@ -35,7 +37,7 @@ private:
   void onChange();
 private:
   Position *pos;
-public: //TODO private
+private:
   Turnmark *tmLeft;
   Turnmark *tmRight;
   CarriageType carriage;
