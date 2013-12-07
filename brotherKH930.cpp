@@ -56,6 +56,12 @@ boolean BrotherKH930::isAtRightMark() {
   return tmRight->isAtMark();
 }
 
+void BrotherKH930::setPattern(boolean value[]) {
+  for (int i=0; i<200; i++) {
+    solenoids->needle(i, value[i]);
+  }
+}
+
 void BrotherKH930::onPositionChange() {
   tmLeft->update();
   tmRight->update();

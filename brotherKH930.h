@@ -34,6 +34,12 @@ public:
   boolean isAtRightMark();
   CarriageType carriageType();
 
+  /**
+   * Set the stiching pattern (array of 200 elements).
+   * True means move to position B, false to position D.
+   */
+  void setPattern(boolean value[]);
+
 private:
   static void positionCallback(void* context, int pos);
   static void turnmarkLCallback(void* context, CarriageType carriage);
