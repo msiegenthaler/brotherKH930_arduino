@@ -29,12 +29,12 @@ private:
   InputState analogToState(int value);
   void onTurnmark();
   void pushState(InputState state);
-  boolean checkState(InputState a, InputState b, InputState c);
+  /** Count of the state within lastState. */
+  int countStates(InputState state);
 public: //TODO private
   int pin;
   InputState lastState[3]; // 3 last changes, newest first
   boolean atTurnmark;
-  boolean overTurnmark;
   CarriageType lastCarriageType;
 private:
   void (*callback)(void*, CarriageType);

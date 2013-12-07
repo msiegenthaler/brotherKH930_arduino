@@ -9,7 +9,6 @@ Turnmark::Turnmark(int pin, void (*callback)(void*, CarriageType), void* context
   this->callback = callback;
   this->callbackContext = context;
   atTurnmark = false;
-  overTurnmark = false;
   for (int i=0; i<3; i++) lastState[i] = INPUT_NEUTRAL;
 }
 
@@ -38,8 +37,12 @@ boolean Turnmark::isAtMark() {
   return atTurnmark;
 }
 
-boolean Turnmark::checkState(InputState a, InputState b, InputState c) {
-  return (lastState[0] == a) && (lastState[1] == b) && (lastState[2] == c);
+int Turnmark::countStates(InputState state) {
+  int count = 0;
+  for (int i=0; i<3; i++) {
+    if (lastState[i] == state) count++;
+  }
+  return count;
 }
 
 void Turnmark::update() {
@@ -47,19 +50,21 @@ void Turnmark::update() {
 
   int analog = analogRead(pin);
   InputState state = analogToState(analog);
-  pushState(state);
 
-  boolean overBefore = overTurnmark;
-  if (checkState(INPUT_HIGH, INPUT_HIGH, INPUT_NEUTRAL) || checkState(INPUT_NEUTRAL, INPUT_HIGH, INPUT_HIGH) || checkState(INPUT_HIGH, INPUT_HIGH, INPUT_HIGH)) {
-     lastCarriageType = K_CARRIAGE;
-     overTurnmark = true;
-  } else if (checkState(INPUT_LOW, INPUT_LOW, INPUT_NEUTRAL) || checkState(INPUT_NEUTRAL, INPUT_LOW, INPUT_LOW) || checkState(INPUT_LOW, INPUT_LOW, INPUT_LOW)) {
-     lastCarriageType = L_CARRIAGE;
-     overTurnmark = true;
-  } else if (checkState(INPUT_LOW, INPUT_NEUTRAL, INPUT_HIGH) || checkState(INPUT_HIGH, INPUT_NEUTRAL, INPUT_LOW) || checkState(INPUT_HIGH, INPUT_HIGH, INPUT_LOW) || checkState(INPUT_HIGH, INPUT_LOW, INPUT_LOW)) {
-     lastCarriageType = G_CARRIAGE;
-     overTurnmark = true;
-  } else overTurnmark = false;
-  
-  if (!overBefore && overTurnmark) onTurnmark();
+  if (state == INPUT_NEUTRAL && lastState[0] != INPUT_NEUTRAL) {
+    int highCount = countStates(INPUT_HIGH);
+    int lowCount = countStates(INPUT_LOW);
+    if (highCount > 0 && lowCount > 0) {
+      lastCarriageType = G_CARRIAGE;
+      onTurnmark();
+    } else if (highCount > 1) {
+      lastCarriageType = K_CARRIAGE;
+      onTurnmark();
+    } else if (lowCount > 1) {
+      lastCarriageType = L_CARRIAGE;
+      onTurnmark();
+    }
+  }
+
+  pushState(state);
 }
