@@ -30,6 +30,9 @@ public:
    */
   int position();
 
+  /** Sets the current needle (i.e. when a turnmark detected the position). */
+  void setPosition(int pos);
+
 private:
   static void isr_v1();
   void onV1();

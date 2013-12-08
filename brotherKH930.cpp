@@ -1,5 +1,9 @@
 #include "brotherKH930.h"
 
+// Number of needles the turnpoint needs to detect a passing carriage
+#define TP_DETECTION_DELAY_LEFT 1
+#define TP_DETECTION_DELAY_RIGHT 3
+
 PinSetup kniticV2Pins() {
   PinSetup pins;
   pins.encoderV1 = 2;
@@ -74,6 +78,13 @@ void BrotherKH930::onPositionChange() {
 }
 
 void BrotherKH930::onTurnmark(boolean left, CarriageType carriage) {
+  int newPos;
+  if (left) newPos = 0;
+  else newPos = NEEDLE_COUNT - 1;
+  if (pos->direction() == LEFT) newPos -= TP_DETECTION_DELAY_LEFT;
+  else newPos += TP_DETECTION_DELAY_RIGHT;
+  pos->setPosition(newPos);
+
   this->carriage = carriage;
   solenoids->onTurnmark(carriage == L_CARRIAGE, left);
   callback(callbackContext);

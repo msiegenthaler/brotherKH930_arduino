@@ -1,7 +1,6 @@
 #include <arduino.h>
 #include "position.h"
 
-#define OFFSET 21
 #define NEEDLE_COUNT 200
 
 // Redirects the ISR to the class method.
@@ -17,7 +16,7 @@ Position::Position(int pinV1, int pinV2, void (*callback)(void*, int), void* con
   this->callbackContext = context;
 
   //default to left to right
-  pos = -OFFSET;
+  pos = -50;
   dir = RIGHT;
   lastV2 = LOW;
 
@@ -38,6 +37,10 @@ unsigned int Position::needle() {
 
 int Position::position() {
   return pos;
+}
+
+void Position::setPosition(int p) {
+  pos = p;
 }
 
 void Position::onV1() { // called by ISR
