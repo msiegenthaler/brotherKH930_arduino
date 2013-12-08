@@ -5,7 +5,7 @@
 #import "turnmark.h"
 #import "solenoids.h"
 
-/** Pins unsed for interfacing with the BrotherKH930. */
+/** Pins used to interface with the BrotherKH930. */
 struct PinSetup {
   int encoderV1;
   int encoderV2;
