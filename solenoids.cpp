@@ -5,7 +5,7 @@ Solenoids::Solenoids(int pinBP, const int solenoidPins[]) {
   pinMode(pinBP, INPUT);
   for (int i=0; i<SOLENIOD_COUNT; i++) {
     this->pin[i] = solenoidPins[i];
-    pinMode(solenoidPins[i], INPUT);
+    pinMode(solenoidPins[i], OUTPUT);
   }
   for (int i=0; i<NEEDLE_COUNT; i++) pattern[i] = false;
 }

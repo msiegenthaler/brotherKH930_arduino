@@ -39,6 +39,11 @@ public:
    * True means move to position B, false to position D.
    */
   void setPattern(boolean value[]);
+  /**
+   * Set the value of a needle. True means move to position B, false to position D.
+   * Needles: Leftmost = 0.
+   */
+  void needle(unsigned int needle, boolean value);
 
 private:
   static void positionCallback(void* context, int pos);
