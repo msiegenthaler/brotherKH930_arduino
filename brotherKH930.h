@@ -22,13 +22,15 @@ PinSetup kniticV2Pins();
  * Interfact to a brother knitting machine KH930/940.
  * The callback will be called on every event (position/direction change). The
  * callback might be called in a ISR.
+ * Needles are numbered left to right (yellow 100 is 0, green 1 is 0, green 100 is 199).
  */
 class BrotherKH930 {
 public:
   BrotherKH930(const PinSetup pins, void (*callback)(void*), void* context);
   void start();
 
-  int position();
+  /** Needle number at the middle of the carriage (where the thread is). */
+  unsigned int needle();
   Direction direction();
   boolean isAtLeftMark();
   boolean isAtRightMark();
@@ -39,10 +41,7 @@ public:
    * True means move to position B, false to position D.
    */
   void setPattern(boolean value[]);
-  /**
-   * Set the value of a needle. True means move to position B, false to position D.
-   * Needles: Leftmost = 0.
-   */
+  /** Set the value of a needle. True means move to position B, false to position D. */
   void needle(unsigned int needle, boolean value);
 
 private:

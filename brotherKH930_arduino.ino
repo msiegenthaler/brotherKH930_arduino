@@ -20,7 +20,7 @@ void loop() {
     changed = false;
 
     Direction dir = brother.direction();
-    int pos = brother.position();
+    int pos = brother.needle();
 
     Serial.print("@");
     Serial.print(pos);

@@ -36,8 +36,8 @@ void BrotherKH930::start() {
   pos->start();
 }
 
-int BrotherKH930::position() {
-  return pos->position();
+unsigned int BrotherKH930::needle() {
+  return pos->needle();
 }
 
 CarriageType BrotherKH930::carriageType() {
@@ -69,7 +69,7 @@ void BrotherKH930::needle(unsigned int needle, boolean value) {
 void BrotherKH930::onPositionChange() {
   tmLeft->update();
   tmRight->update();
-  solenoids->onMove(pos->zeroBasedPosition(), direction() == LEFT);
+  solenoids->onMove(pos->position(), direction() == LEFT);
   callback(callbackContext);
 }
 

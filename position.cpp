@@ -1,8 +1,8 @@
 #include <arduino.h>
 #include "position.h"
 
-#define START -123
-#define END   128
+#define OFFSET 21
+#define NEEDLE_COUNT 200
 
 // Redirects the ISR to the class method.
 Position *isr_pos;
@@ -16,7 +16,8 @@ Position::Position(int pinV1, int pinV2, void (*callback)(void*, int), void* con
   this->callback = callback;
   this->callbackContext = context;
 
-  pos = START; //carriage always starts at the left
+  //default to left to right
+  pos = -OFFSET;
   dir = RIGHT;
   lastV2 = LOW;
 
@@ -31,12 +32,12 @@ Direction Position::direction() {
   return dir;
 }
 
-int Position::position() {
-  return pos;
+unsigned int Position::needle() {
+  return min(NEEDLE_COUNT-1, max(0, pos));
 }
 
-unsigned int Position::zeroBasedPosition() {
-  return pos - START;
+int Position::position() {
+  return pos;
 }
 
 void Position::onV1() { // called by ISR
@@ -59,6 +60,6 @@ void Position::updateDirection() {
 }
 
 void Position::moveOneNeedle() { // in direction, so call updateDirection first
-  if (dir == LEFT) pos = max(START, pos-1);
-  else pos = min(END, pos + 1);
+  if (dir == LEFT) pos--;
+  else pos++;
 }

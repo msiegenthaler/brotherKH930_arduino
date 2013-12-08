@@ -18,7 +18,7 @@ void Solenoids::onTurnmark(boolean is_L_carriage, boolean left) {
   else mode2 = !bp;               //K and right
 }
 
-void Solenoids::onMove(unsigned int position, boolean toTheLeft) {
+void Solenoids::onMove(int position, boolean toTheLeft) {
   //Window of relevant needles
   int windowMax, windowMin;
   if (toTheLeft) {

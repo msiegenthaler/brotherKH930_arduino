@@ -16,11 +16,19 @@ public:
 
   /** Carriage movement direction (left = smaller needle numbers). */
   Direction direction();
-  /** Current needle (-128 until +123). Refers to the needle number at
-   * the middle of the carriage (where the thread is). */
+
+  /**
+   * Current needle [0, 200).
+   * Refers to the needle number at the middle of the carriage (where the thread is). Needles
+   * are numbered left to right (yellow 100 is 0, green 1 is 0, green 100 is 199).
+   */
+  unsigned int needle();
+
+  /**
+   * Position of the carriage, 0 is the leftmost needle. In contrast to needle() this value
+   *  may become negative or bigger than 199 (because the carriage was a nonzero width).
+   */
   int position();
-  /** Same information as position but from 0 until 200 */
-  unsigned int zeroBasedPosition();
 
 private:
   static void isr_v1();

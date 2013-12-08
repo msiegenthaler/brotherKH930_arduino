@@ -16,8 +16,8 @@ public:
   /** Call whenever the carriage passes the left or right turnmark. */
   void onTurnmark(boolean is_L_carriage, boolean left);
 
-  /** Call whenever the carriage moves. Position is zero based. */
-  void onMove(unsigned int position, boolean toTheLeft);
+  /** Call whenever the carriage moves. */
+  void onMove(int position, boolean toTheLeft);
 
   /**
    * Set the value of a needle. True means move to position B, false to position D.
