@@ -18,6 +18,13 @@ struct PinSetup {
 /** Pin setup as used by the KniticV2 PCB. */
 PinSetup kniticV2Pins();
 
+enum CarriagePosition {
+  LEFT_OUTSIDE, // the carriage is positioned to the left of the needles.
+  OVER_NEEDLES, // the carriage is positioned to the left of the needles.
+  RIGHT_OUTSIDE // the carriage is positioned over the needles (see needle()).
+};
+
+
 /**
  * Interfact to a brother knitting machine KH930/940.
  * The callback will be called on every event (position/direction change). The
@@ -32,8 +39,11 @@ public:
   /** Needle number at the middle of the carriage (where the thread is). */
   unsigned int needle();
   Direction direction();
+
   boolean isAtLeftMark();
   boolean isAtRightMark();
+
+  CarriagePosition carriagePosition();
   CarriageType carriageType();
 
   /**

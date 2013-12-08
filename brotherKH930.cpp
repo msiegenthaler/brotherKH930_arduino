@@ -48,6 +48,13 @@ CarriageType BrotherKH930::carriageType() {
   return carriage;
 }
 
+CarriagePosition BrotherKH930::carriagePosition() {
+  int p = pos->position();
+  if (p < 0) return LEFT_OUTSIDE;
+  else if (p >= NEEDLE_COUNT) return RIGHT_OUTSIDE;
+  else return OVER_NEEDLES;
+}
+
 Direction BrotherKH930::direction() {
   return pos->direction();
 }
