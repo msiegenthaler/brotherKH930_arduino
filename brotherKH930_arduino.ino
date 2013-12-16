@@ -12,6 +12,9 @@ void setup() {
   Serial.begin(115200);
   brother.start();
   Serial.println("Ready.");
+
+  for (int i=0; i<200; i++)
+    brother.needle(0, false);
 }
 
 boolean changed = true;
