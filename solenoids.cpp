@@ -22,11 +22,11 @@ void Solenoids::onMove(int position, boolean toTheLeft) {
   //Window of relevant needles
   int windowMax, windowMin;
   if (toTheLeft) {
-    windowMin = position;
-    windowMax = position + SOLENIOD_COUNT;
+    windowMin = position + 8;
+    windowMax = position + 8 + SOLENIOD_COUNT;
   } else {
-    windowMin = position - SOLENIOD_COUNT;
-    windowMax = position;
+    windowMin = position - 8 - SOLENIOD_COUNT;
+    windowMax = position - 8;
   }
 
   //it's ok to go over the max/under the min of needles, patternAt will take care of that
