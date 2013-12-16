@@ -38,6 +38,11 @@ public:
 
   /** Needle number at the middle of the carriage (where the thread is). */
   unsigned int needle();
+  /**
+   * Position of the carriage, 0 is the leftmost needle. In contrast to needle() this value
+   *  may become negative or bigger than 199 (because the carriage was a nonzero width).
+   */
+  int position();
   Direction direction();
 
   boolean isAtLeftMark();

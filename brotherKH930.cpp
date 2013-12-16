@@ -44,6 +44,10 @@ unsigned int BrotherKH930::needle() {
   return pos->needle();
 }
 
+int BrotherKH930::position() {
+  return pos->position();
+}
+
 CarriageType BrotherKH930::carriageType() {
   return carriage;
 }

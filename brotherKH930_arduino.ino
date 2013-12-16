@@ -28,6 +28,9 @@ void loop() {
     Serial.print(brother.needle());
     Serial.print("\t");
 
+    Serial.print(brother.position());
+    Serial.print("\t");
+
     if (brother.direction() == LEFT) Serial.print("<-");
     else Serial.print("->");
     Serial.print("\t");
