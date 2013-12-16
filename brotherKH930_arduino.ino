@@ -27,32 +27,14 @@ void loop() {
   if (changed) {
     changed = false;
 
-    Serial.print("@");
-    Serial.print(brother.needle());
-    Serial.print("\t");
+    Serial.print(",");
+    Serial.print(227 - brother.position());
 
-    Serial.print(brother.position());
-    Serial.print("\t");
+    Serial.print(",");
+    if (brother.direction() == LEFT) Serial.print("1");
+    else Serial.print("-1");
 
-    if (brother.direction() == LEFT) Serial.print("<-");
-    else Serial.print("->");
-    Serial.print("\t");
-
-    if (brother.carriageType() == K_CARRIAGE) Serial.print("K");
-    else if (brother.carriageType() == G_CARRIAGE) Serial.print("G");
-    else if (brother.carriageType() == L_CARRIAGE) Serial.print("L");
-    else Serial.print("?");
-    Serial.print(" ");
-
-    if (brother.carriagePosition() == LEFT_OUTSIDE) Serial.print("<");
-    else if (brother.carriagePosition() == RIGHT_OUTSIDE) Serial.print(">");
-    else Serial.print("_");
-    Serial.print("\t");
-
-    if (brother.isAtLeftMark()) Serial.print(" at L");
-    else if (brother.isAtRightMark()) Serial.print(" at R");
-    else Serial.print("     ");
-    Serial.println();
+    Serial.println(",0@");
   }
 
   readInput();
@@ -66,7 +48,7 @@ int pos = 0;
 void readInput() {
   int in = Serial.read();
   if (in >= 0) {
-    if (in == '\n') {
+    if (in == 126 || in == '\n') {
       if (pos > 0) {
         handleLine(buffer, pos);
         pos = 0;
@@ -86,17 +68,16 @@ void readInput() {
 void handleLine(byte* buffer, int len) {
   if (len == 0) return;
 
-  if (buffer[0] == '$') {
+  if (buffer[0] == 1 || buffer[0] == 0) {
     for (int i=1; i<len; i++) {
-      if (buffer[i] == '1') brother.needle(i-1, true);
-      else if (buffer[i] == '0') brother.needle(i-1, false);
+      if (buffer[i] == 1) brother.needle(199-i, true);
+      else if (buffer[i] == 0) brother.needle(199-i, false);
+      Serial.print(String(buffer[i]));
     }
-    Serial.print("* Accepted pattern data for ");
-    Serial.print(len-1);
-    Serial.println(" needles");
+    Serial.println("@");
   } else {
     Serial.print("* Ignored input: ");
     Serial.write(buffer, len);
-    Serial.println();
+    Serial.println("@");
   }
 }
