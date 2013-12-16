@@ -54,4 +54,49 @@ void loop() {
     else Serial.print("     ");
     Serial.println();
   }
+
+  readInput();
+}
+
+
+#define MAX_LENGTH 255
+byte buffer[MAX_LENGTH];
+int pos = 0;
+
+void readInput() {
+  int in = Serial.read();
+  if (in >= 0) {
+    if (in == '\n') {
+      if (pos > 0) {
+        handleLine(buffer, pos);
+        pos = 0;
+      } // else ignore (empty line)
+    } else if (in == '\r') {
+      //skip \r
+    } else {
+      buffer[pos++] = in;
+    }
+    if (pos >= MAX_LENGTH) {
+      //Throw away the buffer if line length is exceeded
+      pos = 0;
+    }
+  }
+}
+
+void handleLine(byte* buffer, int len) {
+  if (len == 0) return;
+
+  if (buffer[0] == '$') {
+    for (int i=1; i<len; i++) {
+      if (buffer[i] == '1') brother.needle(i-1, true);
+      else if (buffer[i] == '0') brother.needle(i-1, false);
+    }
+    Serial.print("* Accepted pattern data for ");
+    Serial.print(len-1);
+    Serial.println(" needles");
+  } else {
+    Serial.print("* Ignored input: ");
+    Serial.write(buffer, len);
+    Serial.println();
+  }
 }
