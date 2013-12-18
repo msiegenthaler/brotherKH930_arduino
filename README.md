@@ -64,7 +64,7 @@ Getting Started
           }
         }
 
-* For more example code see the [brotherKH930_arduino.ino](blob/master/brotherKH930_arduino.ino) file in the library
+* For more example code see the [brotherKH930_arduino.ino](brotherKH930_arduino.ino) file in the library
 
 References
 ----------
