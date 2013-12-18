@@ -1,10 +1,5 @@
 #include "brotherKH930.h"
 
-void * operator new(size_t size);
-void * operator new(size_t size) {
-   return malloc(size);
-}
-
 PinSetup pins = kniticV2Pins();
 BrotherKH930 brother(pins, onChange, 0);
 
