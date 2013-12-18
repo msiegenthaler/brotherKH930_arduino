@@ -66,10 +66,10 @@ private:
   void onPositionChange();
   void onTurnmark(boolean left, CarriageType carriage);
 private:
-  Position *pos;
-  Turnmark *tmLeft;
-  Turnmark *tmRight;
-  Solenoids *solenoids;
+  Position pos;
+  Turnmark tmLeft;
+  Turnmark tmRight;
+  Solenoids solenoids;
 private:
   CarriageType carriage;
 private:
