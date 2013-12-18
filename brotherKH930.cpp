@@ -11,7 +11,9 @@ PinSetup kniticV2Pins() {
   pins.beltPhase = 4;
   pins.turnmarkLeft = 0;
   pins.turnmarkRight = 1;
-  pins.solenoids = { 23,25,27,29,31,33,35,37,36,34,32,30,28,26,24,22 };
+  int sps[] = { 23,25,27,29,31,33,35,37,36,34,32,30,28,26,24,22 };
+  for (int i=0; i<SOLENIOD_COUNT; i++)
+    pins.solenoids[i] = sps[i];
   return pins;
 }
 
