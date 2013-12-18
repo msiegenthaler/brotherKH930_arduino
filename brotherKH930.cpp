@@ -29,25 +29,25 @@ void BrotherKH930::turnmarkRCallback(void* context, CarriageType carriage) {
   ((BrotherKH930*)context)->onTurnmark(false, carriage);
 }
 
-BrotherKH930::BrotherKH930(const PinSetup pins, void (*callback)(void*), void* context) {
+BrotherKH930::BrotherKH930(const PinSetup pins, void (*callback)(void*), void* context) :
+    pos(pins.encoderV1, pins.encoderV2, positionCallback, this),
+    tmLeft(pins.turnmarkLeft, turnmarkLCallback, this),
+    tmRight(pins.turnmarkRight, turnmarkRCallback, this),
+    solenoids(pins.beltPhase, pins.solenoids) {
   this->callback = callback;
   this->callbackContext = context;
-  tmLeft = new Turnmark(pins.turnmarkLeft, turnmarkLCallback, this);
-  tmRight = new Turnmark(pins.turnmarkRight, turnmarkRCallback, this);
-  pos = new Position(pins.encoderV1, pins.encoderV2, positionCallback, this);
-  solenoids = new Solenoids(pins.beltPhase, pins.solenoids);
 }
 
 void BrotherKH930::start() {
-  pos->start();
+  pos.start();
 }
 
 unsigned int BrotherKH930::needle() {
-  return pos->needle();
+  return pos.needle();
 }
 
 int BrotherKH930::position() {
-  return pos->position();
+  return pos.position();
 }
 
 CarriageType BrotherKH930::carriageType() {
@@ -55,38 +55,38 @@ CarriageType BrotherKH930::carriageType() {
 }
 
 CarriagePosition BrotherKH930::carriagePosition() {
-  int p = pos->position();
+  int p = pos.position();
   if (p < 0) return LEFT_OUTSIDE;
   else if (p >= NEEDLE_COUNT) return RIGHT_OUTSIDE;
   else return OVER_NEEDLES;
 }
 
 Direction BrotherKH930::direction() {
-  return pos->direction();
+  return pos.direction();
 }
 
 boolean BrotherKH930::isAtLeftMark() {
-  return tmLeft->isAtMark();
+  return tmLeft.isAtMark();
 }
 
 boolean BrotherKH930::isAtRightMark() {
-  return tmRight->isAtMark();
+  return tmRight.isAtMark();
 }
 
 void BrotherKH930::setPattern(boolean value[]) {
-  for (int i=0; i<200; i++) {
-    solenoids->needle(i, value[i]);
+  for (int i=0; i<NEEDLE_COUNT; i++) {
+    solenoids.needle(i, value[i]);
   }
 }
 
 void BrotherKH930::needle(unsigned int needle, boolean value) {
-  solenoids->needle(needle, value);
+  solenoids.needle(needle, value);
 }
 
 void BrotherKH930::onPositionChange() {
-  tmLeft->update();
-  tmRight->update();
-  solenoids->onMove(pos->position(), direction() == LEFT);
+  tmLeft.update();
+  tmRight.update();
+  solenoids.onMove(pos.position(), direction() == LEFT);
   callback(callbackContext);
 }
 
@@ -94,11 +94,11 @@ void BrotherKH930::onTurnmark(boolean left, CarriageType carriage) {
   int newPos;
   if (left) newPos = 0;
   else newPos = NEEDLE_COUNT - 1;
-  if (pos->direction() == LEFT) newPos -= TP_DETECTION_DELAY_LEFT;
+  if (pos.direction() == LEFT) newPos -= TP_DETECTION_DELAY_LEFT;
   else newPos += TP_DETECTION_DELAY_RIGHT;
-  pos->setPosition(newPos);
+  pos.setPosition(newPos);
 
   this->carriage = carriage;
-  solenoids->onTurnmark(carriage == L_CARRIAGE, left);
+  solenoids.onTurnmark(carriage == L_CARRIAGE, left);
   callback(callbackContext);
 }
