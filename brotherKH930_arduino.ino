@@ -37,7 +37,7 @@ void loop() {
     else if (brother.carriageType() == G_CARRIAGE) Serial.print("G");
     else if (brother.carriageType() == L_CARRIAGE) Serial.print("L");
     else Serial.print("?");
-    Serial.print(" ");
+    Serial.print("\t");
 
     if (brother.carriagePosition() == LEFT_OUTSIDE) Serial.print("<");
     else if (brother.carriagePosition() == RIGHT_OUTSIDE) Serial.print(">");
