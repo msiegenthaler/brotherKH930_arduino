@@ -23,6 +23,8 @@ void loop() {
     changed = false;
 
     Serial.print("@");
+    Serial.print("\t");
+
     Serial.print(brother.needle());
     Serial.print("\t");
 
@@ -81,16 +83,16 @@ void readInput() {
 void handleLine(byte* buffer, int len) {
   if (len == 0) return;
 
-  if (buffer[0] == '$') {
-    for (int i=1; i<len; i++) {
-      if (buffer[i] == '1') brother.needle(i-1, true);
-      else if (buffer[i] == '0') brother.needle(i-1, false);
+  if (buffer[0] == '$' && buffer[1] == '\t' && buffer[2] == '>') {
+    for (int i=3,n=0; i<len; i++, n++) {
+      if (buffer[i] == '1') brother.needle(n, true);
+      else if (buffer[i] == '0') brother.needle(n, false);
     }
-    Serial.print("* Accepted pattern data for ");
-    Serial.print(len-1);
-    Serial.println(" needles");
+    Serial.print("$\t<\t");
+    Serial.write(&buffer[3], len-3);
+    Serial.println('\n');
   } else {
-    Serial.print("* Ignored input: ");
+    Serial.print("*\tInvalid input");
     Serial.write(buffer, len);
     Serial.println();
   }
