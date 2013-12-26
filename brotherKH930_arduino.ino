@@ -6,10 +6,11 @@ BrotherKH930 brother(pins, onChange, 0);
 void setup() {
   Serial.begin(19200);
   brother.start();
-  Serial.println("*\tReady");
-
   for (int i=0; i<200; i++)
     brother.needle(0, false);
+
+  delay(100);
+  Serial.println("*\tReady");
 }
 
 boolean changed = true;
