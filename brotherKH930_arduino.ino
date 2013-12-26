@@ -83,13 +83,13 @@ void readInput() {
 void handleLine(byte* buffer, int len) {
   if (len == 0) return;
 
-  if (buffer[0] == '$' && buffer[1] == '\t' && buffer[2] == '>') {
-    for (int i=3,n=0; i<len; i++, n++) {
+  if (len > 4 && buffer[0] == '$' && buffer[1] == '\t' && buffer[2] == '>' && buffer[3] == '\t') {
+    for (int i=4,n=0; i<len; i++, n++) {
       if (buffer[i] == '1') brother.needle(n, true);
       else if (buffer[i] == '0') brother.needle(n, false);
     }
     Serial.print("$\t<\t");
-    Serial.write(&buffer[3], len-3);
+    Serial.write(&buffer[4], len-4);
     Serial.println('\n');
   } else {
     Serial.print("*\tInvalid input");
