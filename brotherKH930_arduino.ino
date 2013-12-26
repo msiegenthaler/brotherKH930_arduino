@@ -63,7 +63,7 @@ int pos = 0;
 
 void readInput() {
   int in = Serial.read();
-  if (in >= 0) {
+  while (in >= 0) {
     if (in == '\n') {
       if (pos > 0) {
         handleLine(buffer, pos);
@@ -117,4 +117,5 @@ void handleLine(byte* buffer, int len) {
     Serial.println();
     Serial.flush();
   }
+  delay(1);
 }
