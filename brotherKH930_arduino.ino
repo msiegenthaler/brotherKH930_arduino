@@ -50,6 +50,7 @@ void loop() {
     else if (brother.isAtRightMark()) Serial.print(" at R");
     else Serial.print("     ");
     Serial.println();
+    Serial.flush();
   }
 
   readInput();
@@ -91,9 +92,11 @@ void handleLine(byte* buffer, int len) {
     Serial.print("$\t<\t");
     Serial.write(&buffer[4], len-4);
     Serial.println('\n');
+    Serial.flush();
   } else {
     Serial.print("*\tInvalid input: ");
     Serial.write(buffer, len);
     Serial.println();
+    Serial.flush();
   }
 }
