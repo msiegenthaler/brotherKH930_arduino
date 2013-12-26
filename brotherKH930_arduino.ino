@@ -46,9 +46,9 @@ void loop() {
     else Serial.print("_");
     Serial.print("\t");
 
-    if (brother.isAtLeftMark()) Serial.print(" at L");
-    else if (brother.isAtRightMark()) Serial.print(" at R");
-    else Serial.print("     ");
+    if (brother.isAtLeftMark()) Serial.print("at L");
+    else if (brother.isAtRightMark()) Serial.print("at R");
+    else Serial.print("    ");
     Serial.println();
     Serial.flush();
   }
