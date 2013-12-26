@@ -92,7 +92,7 @@ void handleLine(byte* buffer, int len) {
     Serial.write(&buffer[4], len-4);
     Serial.println('\n');
   } else {
-    Serial.print("*\tInvalid input");
+    Serial.print("*\tInvalid input: ");
     Serial.write(buffer, len);
     Serial.println();
   }
