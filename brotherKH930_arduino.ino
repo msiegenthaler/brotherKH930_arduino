@@ -6,7 +6,7 @@ BrotherKH930 brother(pins, onChange, 0);
 void setup() {
   Serial.begin(115200);
   brother.start();
-  Serial.println("Ready.");
+  Serial.println("*\tReady");
 
   for (int i=0; i<200; i++)
     brother.needle(0, false);
