@@ -1,5 +1,7 @@
 #include "solenoids.h"
 
+#define CARRIAGE_OFFSET 8
+
 Solenoids::Solenoids(int pinBP, const int solenoidPins[]) {
   this->pinBP = pinBP;
   pinMode(pinBP, INPUT);
@@ -22,11 +24,11 @@ void Solenoids::onMove(int position, boolean toTheLeft) {
   //Window of relevant needles
   int windowMax, windowMin;
   if (toTheLeft) {
-    windowMin = position + 8;
-    windowMax = position + 8 + SOLENIOD_COUNT;
+    windowMin = position + CARRIAGE_OFFSET;
+    windowMax = position + CARRIAGE_OFFSET + SOLENIOD_COUNT;
   } else {
-    windowMin = position - 8 - SOLENIOD_COUNT;
-    windowMax = position - 8;
+    windowMin = position - CARRIAGE_OFFSET - SOLENIOD_COUNT;
+    windowMax = position - CARRIAGE_OFFSET;
   }
 
   //it's ok to go over the max/under the min of needles, patternAt will take care of that
