@@ -30,7 +30,7 @@ void BrotherKH930::turnmarkRCallback(void* context, CarriageType carriage) {
 }
 
 BrotherKH930::BrotherKH930(const PinSetup pins, void (*callback)(void*), void* context) :
-    pos(pins.encoderV1, pins.encoderV2, positionCallback, this),
+    pos(pins.encoderV1, pins.encoderV2, pins.beltPhase, positionCallback, this),
     tmLeft(pins.turnmarkLeft, turnmarkLCallback, this),
     tmRight(pins.turnmarkRight, turnmarkRCallback, this),
     solenoids(pins.beltPhase, pins.solenoids) {

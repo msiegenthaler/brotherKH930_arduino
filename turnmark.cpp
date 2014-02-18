@@ -1,7 +1,7 @@
 #include "turnmark.h"
 
-#define ANALOG_HIGH 400
-#define ANALOG_LOW  100
+#define ANALOG_HIGH 460
+#define ANALOG_LOW  10
 
 
 Turnmark::Turnmark(int pin, void (*callback)(void*, CarriageType), void* context) {
