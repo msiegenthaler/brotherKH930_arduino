@@ -1,7 +1,7 @@
 #include "turnmark.h"
 
 #define ANALOG_HIGH 460
-#define ANALOG_LOW  10
+#define ANALOG_LOW  50
 
 
 Turnmark::Turnmark(int pin, void (*callback)(void*, CarriageType), void* context) {
@@ -20,6 +20,7 @@ InputState Turnmark::analogToState(int value) {
 
 void Turnmark::onTurnmark() {
   atTurnmark = true;
+  for (int i=0; i<3; i++) lastState[i] = INPUT_NEUTRAL;
   callback(callbackContext, lastCarriageType);
 }
 
