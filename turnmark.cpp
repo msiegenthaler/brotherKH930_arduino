@@ -54,13 +54,14 @@ void Turnmark::update() {
   if (state == INPUT_NEUTRAL && lastState[0] != INPUT_NEUTRAL) {
     int highCount = countStates(INPUT_HIGH);
     int lowCount = countStates(INPUT_LOW);
+
     if (highCount > 0 && lowCount > 0) {
       lastCarriageType = G_CARRIAGE;
       onTurnmark();
-    } else if (highCount > 1) {
+    } else if (highCount > 0) {
       lastCarriageType = K_CARRIAGE;
       onTurnmark();
-    } else if (lowCount > 1) {
+    } else if (lowCount > 0) {
       lastCarriageType = L_CARRIAGE;
       onTurnmark();
     }
